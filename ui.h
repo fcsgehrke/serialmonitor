@@ -46,6 +46,7 @@ void setRxState(HWND hwndDlg, uint8_t state);
 void blinkTx(HWND hwndDlg);
 void blinkRx(HWND hwndDlg);
 void initTimer(HWND hwndDlg);
+void changeUiState(HWND hwndDlg, uint8_t enabled);
 
 #define LOG(txt) \
     log(txt, 0, 0);

@@ -233,6 +233,19 @@ void clearIO(HWND hwndDlg)
     }
 }
 
+void changeUiState(HWND hwndDlg, uint8_t enabled)
+{
+    EnableWindow(GetDlgItem(hwndDlg, IDD_AUTO_READ_IO_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_CLEAR_LCD_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_OUTPUT_1_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_OUTPUT_2_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_OUTPUT_3_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_OUTPUT_4_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_READ_IO_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_WRITE_LCD_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_PORT_COMBO), !enabled);
+}
+
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (hMainDlg == 0 || hwndDlg == hMainDlg)
@@ -336,6 +349,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                     LOG("Porta desconectada.");
 
                     clearIO(hwndDlg);
+                    changeUiState(hwndDlg, 0);
                 }
                 else
                 {
@@ -350,6 +364,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
                             blinkRx(hwndDlg);
                             blinkTx(hwndDlg);
+                            changeUiState(hwndDlg, 1);
                         }
                         else
                             LOG("ERRO: Não foi possivel conectar a porta selecionada.");
