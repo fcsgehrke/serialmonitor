@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1593033859 source:c:\users\felipe\projects\serialmonitor\main.cpp
+	"ui.h"
+
+1593044943 c:\users\felipe\projects\serialmonitor\resource.h
+
+1593044943 source:c:\users\felipe\projects\serialmonitor\resource.rc
+	<windows.h>
+	<commctrl.h>
+	<richedit.h>
+	"resource.h"
+
+1593044449 c:\users\felipe\projects\serialmonitor\ui.h
+	<windows.h>
+	<commctrl.h>
+	<stdio.h>
+	<stdint.h>
+	"resource.h"
+	"app.h"
+
+1593033507 source:c:\users\felipe\projects\serialmonitor\ui.c
+	"ui.h"
+
+1593032333 source:c:\users\felipe\projects\serialmonitor\ui.h
+	<windows.h>
+	<commctrl.h>
+	<stdio.h>
+	<stdint.h>
+	"resource.h"
+
+1593045433 source:c:\users\felipe\projects\serialmonitor\ui.cpp
+	"ui.h"
+
+1593046054 c:\users\felipe\projects\serialmonitor\app.h
+	<string.h>
+	"ui.h"
+	"lib/rs232.h"
+
+1593035274 c:\users\felipe\projects\serialmonitor\lib\rs232.h
+	<stdint.h>
+	<stdlib.h>
+
+1593035274 source:c:\users\felipe\projects\serialmonitor\lib\rs232-win.c
+	"rs232.h"
+	<stdio.h>
+	<string.h>
+
+1593046666 source:c:\users\felipe\projects\serialmonitor\app.cpp
+	"app.h"
+
