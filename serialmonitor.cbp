@@ -39,15 +39,27 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename=".gitignore">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="README.md" />
+		<Unit filename="app.cpp" />
+		<Unit filename="app.h" />
+		<Unit filename="lib/ringbuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/ringbuffer.h" />
+		<Unit filename="lib/rs232-win.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib/rs232.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="manifest.xml" />
 		<Unit filename="resource.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="ui.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="ui.cpp" />
 		<Unit filename="ui.h" />
 		<Extensions />
 	</Project>
