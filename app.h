@@ -5,6 +5,7 @@
 
 #include "ui.h"
 #include "lib/rs232.h"
+#include "lib/ringbuffer.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,8 +45,6 @@ void app_clear_lcd(void);
 #define END_BYTE            0x03
 #define IO_WRITE_BYTE       0x01
 #define IO_READ_BYTE        0x02
-#define OUTPUTS_BYTE        0x01
-#define INPUTS_BYTE         0x02
 
 #ifdef __cplusplus
 }

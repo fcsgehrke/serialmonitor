@@ -1,7 +1,5 @@
 #include "app.h"
 
-
-
 // Read Thread
 DWORD WINAPI ReadThreadFunc(LPVOID lpParam);
 HANDLE readThread = NULL;
@@ -12,9 +10,11 @@ AppData appData;
 char rx_buffer[1024];
 char tx_buffer[1024];
 
+ring_buffer_t buffer;
+
 void app_init(void)
 {
-
+    ring_buffer_init(&buffer);
 }
 
 void app_set_on_new_data(OnNewData nd)
@@ -99,7 +99,8 @@ void app_clear_lcd(void)
 DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
 {
     int rx_count = 0;
-    char *start_pos, *end_pos, *pbuf;
+    char frame_buf[24];
+    int16_t start_pos, end_pos;
 
     while (appData.Connected)
     {
@@ -109,36 +110,35 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
         {
             if (appData.RxEvent)
             {
-                printf("1\n");
                 appData.RxEvent(rx_buffer, rx_count);
+                ring_buffer_queue_arr(&buffer, rx_buffer, rx_count);
 
-                printf("2\n");
-                start_pos = strchr(rx_buffer, START_BYTE);
-                end_pos = strchr(rx_buffer, END_BYTE);
-                printf("3\n");
-                if (end_pos > start_pos)
+                start_pos = ring_buffer_chr(&buffer, START_BYTE);
+                if (start_pos >= 0)
                 {
-                    printf("4\n");
-                    //if (start_pos > 0)
-                    //{
-//                        printf("5\n");
-//                        pbuf = start_pos - rx_buffer + 1;
-//                        switch(pbuf[0])
-//                        {
-//                        case OUTPUTS_BYTE:
-//                            appData.Outputs[0] = pbuf[2] == '1' ? 1 : 0;
-//                            appData.Outputs[1] = pbuf[3] == '1' ? 1 : 0;
-//                            appData.Outputs[2] = pbuf[4] == '1' ? 1 : 0;
-//                            appData.Outputs[3] = pbuf[5] == '1' ? 1 : 0;
-//                            break;
-//
-//                        case INPUTS_BYTE:
-//                            break;
-//                        }
-//
-//                        if (appData.NewDataEvent)
-//                            appData.NewDataEvent();
-                    //}
+                    end_pos = ring_buffer_chr(&buffer, END_BYTE);
+                    if (end_pos >= 0)
+                    {
+                        if (start_pos > 0)
+                            ring_buffer_remove(&buffer, start_pos);
+
+                        ring_buffer_dequeue_arr(&buffer, frame_buf, 24);
+
+                        if (frame_buf[2] == IO_READ_BYTE)
+                        {
+                            appData.Outputs[0] = frame_buf[3] - 0x30;
+                            appData.Outputs[1] = frame_buf[4] - 0x30;
+                            appData.Outputs[2] = frame_buf[5] - 0x30;
+                            appData.Outputs[3] = frame_buf[6] - 0x30;
+                            appData.Inputs[0] = frame_buf[7] - 0x30;
+                            appData.Inputs[1] = frame_buf[8] - 0x30;
+                            appData.Inputs[2] = frame_buf[9] - 0x30;
+                            appData.Inputs[3] = frame_buf[10] - 0x30;
+                        }
+
+                        if (appData.NewDataEvent)
+                            appData.NewDataEvent();
+                    }
                 }
             }
         }

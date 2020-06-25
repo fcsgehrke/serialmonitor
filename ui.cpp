@@ -224,6 +224,15 @@ void updateUi(HWND hwndDlg)
     }
 }
 
+void clearIO(HWND hwndDlg)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        setInputData(hwndDlg, i, 0);
+        setOutputData(hwndDlg, i, 0);
+    }
+}
+
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (hMainDlg == 0 || hwndDlg == hMainDlg)
@@ -325,6 +334,8 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                     SetWindowText(hBtnConnect, "Conectar");
                     app_disconnect();
                     LOG("Porta desconectada.");
+
+                    clearIO(hwndDlg);
                 }
                 else
                 {

@@ -2,9 +2,9 @@
 1593033859 source:c:\users\felipe\projects\serialmonitor\main.cpp
 	"ui.h"
 
-1593052036 c:\users\felipe\projects\serialmonitor\resource.h
+1593052546 c:\users\felipe\projects\serialmonitor\resource.h
 
-1593052036 source:c:\users\felipe\projects\serialmonitor\resource.rc
+1593052546 source:c:\users\felipe\projects\serialmonitor\resource.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
@@ -28,13 +28,14 @@
 	<stdint.h>
 	"resource.h"
 
-1593051941 source:c:\users\felipe\projects\serialmonitor\ui.cpp
+1593058304 source:c:\users\felipe\projects\serialmonitor\ui.cpp
 	"ui.h"
 
-1593046054 c:\users\felipe\projects\serialmonitor\app.h
+1593058075 c:\users\felipe\projects\serialmonitor\app.h
 	<string.h>
 	"ui.h"
 	"lib/rs232.h"
+	"lib/ringbuffer.h"
 
 1593035274 c:\users\felipe\projects\serialmonitor\lib\rs232.h
 	<stdint.h>
@@ -45,6 +46,12 @@
 	<stdio.h>
 	<string.h>
 
-1593046666 source:c:\users\felipe\projects\serialmonitor\app.cpp
+1593058490 source:c:\users\felipe\projects\serialmonitor\app.cpp
 	"app.h"
+
+1593058766 c:\users\felipe\projects\serialmonitor\lib\ringbuffer.h
+	<inttypes.h>
+
+1593058739 source:c:\users\felipe\projects\serialmonitor\lib\ringbuffer.c
+	"ringbuffer.h"
 
