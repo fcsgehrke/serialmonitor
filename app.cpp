@@ -120,25 +120,25 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
                 {
                     printf("4\n");
                     //if (start_pos > 0)
-                    {
-                        printf("5\n");
-                        pbuf = start_pos - rx_buffer + 1;
-                        switch(pbuf[0])
-                        {
-                        case OUTPUTS_BYTE:
-                            appData.Outputs[0] = pbuf[2] == '1' ? 1 : 0;
-                            appData.Outputs[1] = pbuf[3] == '1' ? 1 : 0;
-                            appData.Outputs[2] = pbuf[4] == '1' ? 1 : 0;
-                            appData.Outputs[3] = pbuf[5] == '1' ? 1 : 0;
-                            break;
-
-                        case INPUTS_BYTE:
-                            break;
-                        }
-
-                        if (appData.NewDataEvent)
-                            appData.NewDataEvent();
-                    }
+                    //{
+//                        printf("5\n");
+//                        pbuf = start_pos - rx_buffer + 1;
+//                        switch(pbuf[0])
+//                        {
+//                        case OUTPUTS_BYTE:
+//                            appData.Outputs[0] = pbuf[2] == '1' ? 1 : 0;
+//                            appData.Outputs[1] = pbuf[3] == '1' ? 1 : 0;
+//                            appData.Outputs[2] = pbuf[4] == '1' ? 1 : 0;
+//                            appData.Outputs[3] = pbuf[5] == '1' ? 1 : 0;
+//                            break;
+//
+//                        case INPUTS_BYTE:
+//                            break;
+//                        }
+//
+//                        if (appData.NewDataEvent)
+//                            appData.NewDataEvent();
+                    //}
                 }
             }
         }

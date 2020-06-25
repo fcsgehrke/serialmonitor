@@ -2,9 +2,9 @@
 1593033859 source:c:\users\felipe\projects\serialmonitor\main.cpp
 	"ui.h"
 
-1593044943 c:\users\felipe\projects\serialmonitor\resource.h
+1593052036 c:\users\felipe\projects\serialmonitor\resource.h
 
-1593044943 source:c:\users\felipe\projects\serialmonitor\resource.rc
+1593052036 source:c:\users\felipe\projects\serialmonitor\resource.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
@@ -28,7 +28,7 @@
 	<stdint.h>
 	"resource.h"
 
-1593045433 source:c:\users\felipe\projects\serialmonitor\ui.cpp
+1593051941 source:c:\users\felipe\projects\serialmonitor\ui.cpp
 	"ui.h"
 
 1593046054 c:\users\felipe\projects\serialmonitor\app.h

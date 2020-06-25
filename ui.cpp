@@ -4,7 +4,7 @@
 HINSTANCE hInst;
 
 // Window Instance
-HWND hDlg;
+HWND hMainDlg = 0;
 
 // Icon Handles
 HICON hIconOff;
@@ -187,7 +187,7 @@ void uiOnRxData(char *data, uint8_t sz)
     buf_conv[idx] = 0;
     LOG_RX(buf_conv);
 
-    blinkRx(hDlg);
+    blinkRx(hMainDlg);
 }
 
 void uiOnTxData(char *data, uint8_t sz)
@@ -207,12 +207,12 @@ void uiOnTxData(char *data, uint8_t sz)
     buf_conv[idx] = 0;
     LOG_TX(buf_conv);
 
-    blinkTx(hDlg);
+    blinkTx(hMainDlg);
 }
 
 void uiOnNewData(void)
 {
-    SendMessage(hDlg, WM_NEW_DATA, 0, (LPARAM)"");
+    SendMessage(hMainDlg, WM_NEW_DATA, 0, (LPARAM)"");
 }
 
 void updateUi(HWND hwndDlg)
@@ -226,129 +226,164 @@ void updateUi(HWND hwndDlg)
 
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    switch(uMsg)
+    if (hMainDlg == 0 || hwndDlg == hMainDlg)
     {
-    case WM_NEW_DATA:
-        updateUi(hwndDlg);
-    return TRUE;
-
-    case WM_INITDIALOG:
-    {
-        loadIcons(hwndDlg);
-        loadControls(hwndDlg);
-        initTimer(hwndDlg);
-
-        app_init();
-
-        app_set_on_rx_data(&uiOnRxData);
-        app_set_on_tx_data(&uiOnTxData);
-        app_set_on_new_data(&uiOnNewData);
-
-        LOG("Sistema Inicializado.");
-
-        hDlg = hwndDlg;
-    }
-    return TRUE;
-
-    case WM_CLOSE:
-    {
-        app_disconnect();
-        EndDialog(hwndDlg, 0);
-    }
-    return TRUE;
-
-    case WM_TIMER:
-        if (LOWORD(wParam) == IDT_TIMER_LEDS)
+        switch(uMsg)
         {
-            if (led_tx)
-            {
-                led_tx = 0;
-                setTxState(hwndDlg, 0);
-            }
-            if (led_rx)
-            {
-                led_rx = 0;
-                setRxState(hwndDlg, 0);
-            }
+        case WM_NEW_DATA:
+            updateUi(hwndDlg);
+        return TRUE;
+
+        case WM_INITDIALOG:
+        {
+            loadIcons(hwndDlg);
+            loadControls(hwndDlg);
+            initTimer(hwndDlg);
+
+            app_init();
+
+            app_set_on_rx_data(&uiOnRxData);
+            app_set_on_tx_data(&uiOnTxData);
+            app_set_on_new_data(&uiOnNewData);
+
+            LOG("Sistema Inicializado.");
+
+            hMainDlg = hwndDlg;
         }
         return TRUE;
 
-    case WM_COMMAND:
-    {
-        switch(LOWORD(wParam))
+        case WM_CLOSE:
         {
-        case IDD_OUTPUT_1_BTN:
-            LOG("Clicked !");
-            setOutputData(hwndDlg, 0, 1);
-            addComboData("COM1");
-            blinkRx(hwndDlg);
-            break;
+            app_disconnect();
+            EndDialog(hwndDlg, 0);
+        }
+        return TRUE;
 
-        case IDD_OUTPUT_2_BTN:
-            LOG_RX("Clicked !");
-            setOutputData(hwndDlg, 1, 1);
-             addComboData("COM2");
-             blinkTx(hwndDlg);
-            break;
-
-        case IDD_OUTPUT_3_BTN:
-            LOG_TX("Clicked !");
-            setOutputData(hwndDlg, 2, 1);
-            clearComboData();
-            break;
-
-        case IDD_OUTPUT_4_BTN:
-            setOutputData(hwndDlg, 3, 1);
-            break;
-
-        case IDD_LOG_CLEAR_BTN:
-            clearLog();
-            break;
-
-        case IDD_PORT_COMBO:
-            if (HIWORD(wParam) == CBN_DROPDOWN)
+        case WM_TIMER:
+            if (LOWORD(wParam) == IDT_TIMER_LEDS)
             {
-                clearComboData();
-
-                port_count = app_get_ports(port_names);
-                if (port_count > 0)
-                    setPorts(port_count);
-            }
-            break;
-
-        case IDD_CONNECT_BTN:
-            if (appData.Connected)
-            {
-                clearComboData();
-                SetWindowText(hBtnConnect, "Conectar");
-                app_disconnect();
-                LOG("Porta desconectada.");
-            }
-            else
-            {
-                int idx = SendMessageA(hCombo, CB_GETCURSEL, 0, (LPARAM)"");
-
-                if (idx != CB_ERR)
+                if (led_tx)
                 {
-                    if (app_connect(idx))
-                    {
-                        SetWindowText(hBtnConnect, "Desconectar");
-                        LOG("Porta conectada.");
+                    led_tx = 0;
+                    setTxState(hwndDlg, 0);
+                }
+                if (led_rx)
+                {
+                    led_rx = 0;
+                    setRxState(hwndDlg, 0);
+                }
+            }
+            return TRUE;
 
-                        blinkRx(hwndDlg);
-                        blinkTx(hwndDlg);
-                    }
-                    else
-                        LOG("ERRO: Não foi possivel conectar a porta selecionada.");
+        case WM_COMMAND:
+        {
+            switch(LOWORD(wParam))
+            {
+            case IDD_OUTPUT_1_BTN:
+                LOG("Clicked !");
+                setOutputData(hwndDlg, 0, 1);
+                addComboData("COM1");
+                blinkRx(hwndDlg);
+                break;
+
+            case IDD_OUTPUT_2_BTN:
+                LOG_RX("Clicked !");
+                setOutputData(hwndDlg, 1, 1);
+                 addComboData("COM2");
+                 blinkTx(hwndDlg);
+                break;
+
+            case IDD_OUTPUT_3_BTN:
+                LOG_TX("Clicked !");
+                setOutputData(hwndDlg, 2, 1);
+                clearComboData();
+                break;
+
+            case IDD_OUTPUT_4_BTN:
+                setOutputData(hwndDlg, 3, 1);
+                break;
+
+            case IDD_LOG_CLEAR_BTN:
+                clearLog();
+                break;
+
+            case IDD_PORT_COMBO:
+                if (HIWORD(wParam) == CBN_DROPDOWN)
+                {
+                    clearComboData();
+
+                    port_count = app_get_ports(port_names);
+                    if (port_count > 0)
+                        setPorts(port_count);
+                }
+                break;
+
+            case IDD_CONNECT_BTN:
+                if (appData.Connected)
+                {
+                    clearComboData();
+                    SetWindowText(hBtnConnect, "Conectar");
+                    app_disconnect();
+                    LOG("Porta desconectada.");
                 }
                 else
-                    LOG("ERRO: Você deve selecionar uma porta antes de conectar !");
+                {
+                    int idx = SendMessageA(hCombo, CB_GETCURSEL, 0, (LPARAM)"");
 
+                    if (idx != CB_ERR)
+                    {
+                        if (app_connect(idx))
+                        {
+                            SetWindowText(hBtnConnect, "Desconectar");
+                            LOG("Porta conectada.");
+
+                            blinkRx(hwndDlg);
+                            blinkTx(hwndDlg);
+                        }
+                        else
+                            LOG("ERRO: Não foi possivel conectar a porta selecionada.");
+                    }
+                    else
+                        LOG("ERRO: Você deve selecionar uma porta antes de conectar !");
+
+                }
+                break;
+
+            case IDD_WRITE_LCD_BTN:
+                if (HIWORD(wParam) == BN_CLICKED)
+                {
+                    int ret = DialogBox(hInst, MAKEINTRESOURCE(DLG_LCD), hwndDlg, (DLGPROC)DlgMain);
+                }
+                break;
             }
-            break;
+        }
+        return TRUE;
         }
     }
-    return TRUE;
+    else
+    {
+        switch(uMsg)
+        {
+            case WM_INITDIALOG:
+            {
+
+            }
+            return TRUE;
+
+            case WM_COMMAND:
+            {
+                switch(LOWORD(wParam))
+                {
+                    case IDD_LCD_CANCEL_BTN:
+                        EndDialog(hwndDlg, 0);
+                        break;
+
+                    case IDD_LCD_SEND_BTN:
+                        break;
+                }
+            }
+            return TRUE;
+        }
     }
     return FALSE;
 }
