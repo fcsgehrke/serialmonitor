@@ -365,6 +365,10 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 app_write_outputs(outputs_aux);
                 break;
 
+            case IDD_READ_IO_BTN:
+                app_read_io();
+                break;
+
             case IDD_AUTO_READ_IO_BTN:
                 if (appData.Connected)
                 {
