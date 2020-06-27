@@ -32,7 +32,7 @@ Escrever PWM | <0x05>
 #### Envio:
 STX | FUNC | Bytes não utilizados no envio (devem ser enviados mesmo assim) | CKS | ETX
 --- | ---- |--------------------- | --- | ---
-0x01 | 0x00 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+0x01 | 0x01 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
 #### Resposta:
 STX | FUNC | O1 | O2 | O3 | O4 | I1 | I2 | I3 | I4 | PWMC | PWMD | PWMU | Bytes não utilizados | CKS | ETX
@@ -55,5 +55,46 @@ I4 | Valor da entrada 4 ('0', '1')
 PWMC | Centena do PWM
 PWMD | Dezena do PWM
 PWMU | Unidade do PWM
+CKS | Checksum
+ETX | Byte <0x03> de Fim de Frame
+
+
+### Escrever I/O
+#### Envio:
+STX | FUNC | O1 | O2 | O3 | O4 |                                      Bytes não utilizados                                  | CKS | ETX
+--- | ---- | -- | -- | -- | -- | -------------------------------------------------------------------- | ---- | ---- | ----- | --- | ---
+0x01 | 0x02 | 0x31 | 0x30 | 0x31 | 0x30 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+
+#### Resposta:
+Não há.
+
+Indicador | Descrição
+--------- | ---------
+STX | Byte <0x01> de Inicio de Frame
+FUNC | Função
+O1 | Valor da saida 1 ('0', '1')
+O2 | Valor da saida 2 ('0', '1')
+O3 | Valor da saida 3 ('0', '1')
+O4 | Valor da saida 4 ('0', '1')
+CKS | Checksum
+ETX | Byte <0x03> de Fim de Frame
+
+
+### Escrever LCD
+#### Envio:
+ STX | FUNC |     X     | Y         | TEXTO                                                                           | CKS  | ETX
+---- | ---- | --------- | --------- | ------------------------------------------------------------------------------- | ---- | ----
+0x01 | 0x01 | 0x31 0x30 | 0x31 0x30 | 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 | 0xC0 | 0x03
+
+#### Resposta:
+Não há.
+
+Indicador | Descrição
+--------- | ---------
+STX | Byte <0x01> de Inicio de Frame
+FUNC | Função
+X | Posição X do LCD (0 - 15)
+Y | Posição Y do LCD (0 - 1)
+TEXTO | 16 Caractéres Alfanuméricos (ASCII)
 CKS | Checksum
 ETX | Byte <0x03> de Fim de Frame
