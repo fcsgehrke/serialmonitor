@@ -31,7 +31,7 @@ void create_frame(char *dest, char *data, uint8_t function, uint8_t size)
     {
         for (int i = size; i < DATA_SIZE; i++)
         {
-            dest[i] = 0x30;
+            dest[i + 2] = 0x30;
             cks += dest[i];
         }
     }
@@ -110,7 +110,11 @@ void app_write_outputs(uint8_t *values)
     char outputs[4];
 
     for (int i = 0; i < 4; i++)
+    {
         outputs[i] = values[i] + 0x30;
+        printf("O: %d, V: %d\n", i, outputs[i]);
+    }
+
 
     create_frame(frame, outputs, IO_WRITE_BYTE, 4);
 
