@@ -225,6 +225,13 @@ void uiOnNewData(void)
     SendMessage(hMainDlg, WM_NEW_DATA, 0, (LPARAM)"");
 }
 
+void setPwmData(HWND hwndDlg, uint8_t pwm)
+{
+    char str[20];
+    sprintf(str, "Valor: %3d", pwm);
+    SetDlgItemText(hwndDlg, IDD_PWM_VALUE, str);
+}
+
 void updateUi(HWND hwndDlg)
 {
     for (int i = 0; i < 4; i++)
@@ -232,6 +239,7 @@ void updateUi(HWND hwndDlg)
         setInputData(hwndDlg, i, appData.Inputs[i]);
         setOutputData(hwndDlg, i, appData.Outputs[i]);
     }
+    setPwmData(hwndDlg, appData.Pwm);
 }
 
 void clearIO(HWND hwndDlg)
