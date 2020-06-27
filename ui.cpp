@@ -23,6 +23,10 @@ uint8_t port_count = 0;
 char port_names[10][5];
 char buf_conv[4096];
 
+// LCD Dialog
+char lcd_text[16];
+uint8_t lcd_col, lcd_row;
+
 void loadIcons(HWND hwndDlg)
 {
     HICON hIcon;
@@ -256,8 +260,9 @@ void changeUiState(HWND hwndDlg, uint8_t enabled)
 
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    uint8_t pwm = 0;
+    uint8_t pwm = 0, uint8_t sz;
     uint8_t outputs_aux[4];
+    char aux[2];
 
     if (hMainDlg == 0 || hwndDlg == hMainDlg)
     {
@@ -425,6 +430,15 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                         break;
 
                     case IDD_LCD_SEND_BTN:
+                        sz = GetDlgItemText(hwndDlg, IDD_LCD_DATA, lcd_text, 16);
+                        GetDlgItemText(hwndDlg, IDD_LCD_ROW, aux, 2);
+                        lcd_row = atoi(aux);
+                        if (lcd_row > 1)
+                            lcd_row = 1;
+                        GetDlgItemText(hwndDlg, IDD_LDC_COL, aux, 2);
+                        lcd_col = atoi(aux);
+                        app_write_lcd(lcd_text, sz, lcd_col, lcd_row);
+                        EndDialog(hwndDlg, 0);
                         break;
                 }
             }
