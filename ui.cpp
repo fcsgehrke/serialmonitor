@@ -332,7 +332,8 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             }
             else if (LOWORD(wParam) == IDT_TIMER_IO_UPDATE)
             {
-                app_read_io();
+                if (auto_io)
+                    app_read_io();
             }
             return TRUE;
 
