@@ -34,5 +34,3 @@
 #define IDD_LCD_SEND_BTN                        40100
 #define IDD_LCD_DATA                            40101
 #define IDD_LCD_CANCEL_BTN                      40102
-#define IDD_LINE_1_RB                           40103
-#define IDD_LINE_2_RB                           40104

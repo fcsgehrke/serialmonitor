@@ -76,7 +76,7 @@ ETX | Byte <0x03> de Fim de Frame
 
 ### Escrever LCD
 #### Envio:
-STX  | FUNC |     X     | Y         | TEXTO                                                                           | CKS  | ETX
+STX  | FUNC | X         | Y         | TEXTO                                                                           | CKS  | ETX
 ---- | ---- | --------- | --------- | ------------------------------------------------------------------------------- | ---- | ----
 0x01 | 0x03 | 0x31 0x30 | 0x31 0x30 | 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 | 0xC0 | 0x03
 
@@ -113,7 +113,7 @@ ETX | Byte <0x03> de Fim de Frame
 
 ### Escrever PWM
 #### Envio:
-STX  | FUNC | PWMC PWMD PWMU | Bytes não utilizados no envio (devem ser enviados mesmo assim)                       | CKS  | ETX
+STX  | FUNC | C    D    U    | Bytes não utilizados no envio (devem ser enviados mesmo assim)                       | CKS  | ETX
 ---- | ---- | -------------- | ------------------------------------------------------------------------------------ | ---- | ----
 0x01 | 0x05 | 0x30 0x38 0x35 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
@@ -124,8 +124,8 @@ Indicador | Descrição
 --------- | ---------
 STX | Byte <0x01> de Inicio de Frame
 FUNC | Função
-PWMC | Centena do PWM
-PWMD | Dezena do PWM
-PWMU | Unidade do PWM
+C | Centena do PWM
+D | Dezena do PWM
+U | Unidade do PWM
 CKS | Checksum
 ETX | Byte <0x03> de Fim de Frame
