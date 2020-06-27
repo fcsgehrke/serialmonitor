@@ -206,6 +206,7 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
                             appData.Inputs[1] = frame_buf[8] - 0x30;
                             appData.Inputs[2] = frame_buf[9] - 0x30;
                             appData.Inputs[3] = frame_buf[10] - 0x30;
+
                             pwm = 0;
                             pwm += (frame_buf[11] - 0x30) * 100;
                             pwm += (frame_buf[12] - 0x30) * 10;

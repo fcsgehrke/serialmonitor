@@ -22,6 +22,7 @@ uint8_t led_rx;
 uint8_t port_count = 0;
 char port_names[10][5];
 char buf_conv[4096];
+uint8_t auto_io = 0;
 
 // LCD Dialog
 char lcd_text[16];
@@ -161,9 +162,10 @@ void setPorts(int count)
     }
 }
 
-void initTimer(HWND hwndDlg)
+void initTimers(HWND hwndDlg)
 {
     SetTimer(hwndDlg, IDT_TIMER_LEDS, 150, (TIMERPROC) NULL);
+    SetTimer(hwndDlg, IDT_TIMER_IO_UPDATE, 100, (TIMERPROC) NULL);
 }
 
 void conv_byte_to_hexasc(char data, char *dest)
@@ -293,7 +295,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             loadIcons(hwndDlg);
             loadControls(hwndDlg);
-            initTimer(hwndDlg);
+            initTimers(hwndDlg);
 
             app_init();
 

@@ -10,6 +10,7 @@
 #include "app.h"
 
 #define IDT_TIMER_LEDS  60000
+#define IDT_TIMER_IO_UPDATE  60001
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,7 +46,7 @@ void setTxState(HWND hwndDlg, uint8_t state);
 void setRxState(HWND hwndDlg, uint8_t state);
 void blinkTx(HWND hwndDlg);
 void blinkRx(HWND hwndDlg);
-void initTimer(HWND hwndDlg);
+void initTimers(HWND hwndDlg);
 void changeUiState(HWND hwndDlg, uint8_t enabled);
 
 #define LOG(txt) \
