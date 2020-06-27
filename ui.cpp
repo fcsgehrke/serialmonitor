@@ -260,7 +260,7 @@ void changeUiState(HWND hwndDlg, uint8_t enabled)
 
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    uint8_t pwm = 0, uint8_t sz;
+    uint8_t pwm = 0, sz;
     uint8_t outputs_aux[4];
     char aux[2];
 
@@ -435,7 +435,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                         lcd_row = atoi(aux);
                         if (lcd_row > 1)
                             lcd_row = 1;
-                        GetDlgItemText(hwndDlg, IDD_LDC_COL, aux, 2);
+                        GetDlgItemText(hwndDlg, IDD_LCD_COL, aux, 2);
                         lcd_col = atoi(aux);
                         app_write_lcd(lcd_text, sz, lcd_col, lcd_row);
                         EndDialog(hwndDlg, 0);
