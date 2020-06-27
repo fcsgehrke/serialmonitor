@@ -28,7 +28,7 @@
 	<stdint.h>
 	"resource.h"
 
-1593243577 source:c:\users\felipe\projects\serialmonitor\ui.cpp
+1593244747 source:c:\users\felipe\projects\serialmonitor\ui.cpp
 	"ui.h"
 
 1593241065 c:\users\felipe\projects\serialmonitor\app.h
@@ -46,7 +46,7 @@
 	<stdio.h>
 	<string.h>
 
-1593241404 source:c:\users\felipe\projects\serialmonitor\app.cpp
+1593245347 source:c:\users\felipe\projects\serialmonitor\app.cpp
 	"app.h"
 
 1593058766 c:\users\felipe\projects\serialmonitor\lib\ringbuffer.h

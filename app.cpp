@@ -196,21 +196,21 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
 
                         ring_buffer_dequeue_arr(&buffer, frame_buf, 24);
 
-                        if (frame_buf[2] == IO_READ_BYTE)
+                        if (frame_buf[1] == IO_READ_BYTE)
                         {
-                            appData.Outputs[0] = frame_buf[3] - 0x30;
-                            appData.Outputs[1] = frame_buf[4] - 0x30;
-                            appData.Outputs[2] = frame_buf[5] - 0x30;
-                            appData.Outputs[3] = frame_buf[6] - 0x30;
-                            appData.Inputs[0] = frame_buf[7] - 0x30;
-                            appData.Inputs[1] = frame_buf[8] - 0x30;
-                            appData.Inputs[2] = frame_buf[9] - 0x30;
-                            appData.Inputs[3] = frame_buf[10] - 0x30;
+                            appData.Outputs[0] = frame_buf[2] - 0x30;
+                            appData.Outputs[1] = frame_buf[3] - 0x30;
+                            appData.Outputs[2] = frame_buf[4] - 0x30;
+                            appData.Outputs[3] = frame_buf[5] - 0x30;
+                            appData.Inputs[0] = frame_buf[6] - 0x30;
+                            appData.Inputs[1] = frame_buf[7] - 0x30;
+                            appData.Inputs[2] = frame_buf[8] - 0x30;
+                            appData.Inputs[3] = frame_buf[9] - 0x30;
 
                             pwm = 0;
-                            pwm += (frame_buf[11] - 0x30) * 100;
-                            pwm += (frame_buf[12] - 0x30) * 10;
-                            pwm += (frame_buf[13] - 0x30) * 1;
+                            pwm += (frame_buf[10] - 0x30) * 100;
+                            pwm += (frame_buf[11] - 0x30) * 10;
+                            pwm += (frame_buf[12] - 0x30) * 1;
                             appData.Pwm = pwm;
                         }
 
