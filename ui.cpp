@@ -330,6 +330,10 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                     setRxState(hwndDlg, 0);
                 }
             }
+            else if (LOWORD(wParam) == IDT_TIMER_IO_UPDATE)
+            {
+                app_read_io();
+            }
             return TRUE;
 
         case WM_COMMAND:
@@ -360,6 +364,26 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 app_write_outputs(outputs_aux);
                 break;
 
+            case IDD_AUTO_READ_IO_BTN:
+                if (appData.Connected)
+                {
+                    if (auto_io)
+                    {
+                        auto_io = 0;
+                        SetDlgItemText(hwndDlg, IDD_AUTO_READ_IO_BTN, "Ler I/O Automático");
+                    }
+                    else
+                    {
+                        auto_io = 1;
+                        SetDlgItemText(hwndDlg, IDD_AUTO_READ_IO_BTN, "Desligar I/O Automático");
+                    }
+                }
+                break;
+
+            case IDD_CLEAR_LCD_BTN:
+                app_clear_lcd();
+                break;
+
             case IDD_LOG_CLEAR_BTN:
                 clearLog();
                 break;
@@ -385,6 +409,9 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
                     clearIO(hwndDlg);
                     changeUiState(hwndDlg, 0);
+
+                    auto_io = 0;
+                    SetDlgItemText(hwndDlg, IDD_AUTO_READ_IO_BTN, "Ler I/O Automático");
                 }
                 else
                 {
