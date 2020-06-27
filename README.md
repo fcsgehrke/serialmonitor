@@ -11,7 +11,7 @@ O protocolo é bem simples. A estrutura é composta dos bytes abaixo
 ## Estrutura:
 
 Nome | Byte | Tamanho
-------------------------
+---- | ---- |--------
 STX | <0x01> | 01
 FUNÇÃO | <0x02> | 01
 DADOS | <....> | 20
@@ -22,7 +22,7 @@ ETX | <0x03> | 01
 ## Comandos:
 
 Comando | Byte
---------------
+------- | ----
 Ler I/O | <0x01>
 Escrever I/O | <0x02>
 Escrever LCD | <0x03>
