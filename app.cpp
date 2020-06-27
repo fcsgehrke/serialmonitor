@@ -112,7 +112,7 @@ void app_write_outputs(uint8_t *values)
     for (int i = 0; i < 4; i++)
         outputs[i] = values[i] + 0x30;
 
-    create_frame(frame, values, IO_WRITE_BYTE, 4);
+    create_frame(frame, outputs, IO_WRITE_BYTE, 4);
 
     comWrite(appData.PortIndex, frame, 24);
 }
@@ -121,7 +121,7 @@ void app_read_io(void)
 {
     char frame[24];
 
-    create_frame(frame, "", IO_READ_BYTE, 0);
+    create_frame(frame, (char *)"", IO_READ_BYTE, 0);
 
     comWrite(appData.PortIndex, frame, 24);
 }
@@ -129,7 +129,7 @@ void app_read_io(void)
 void app_write_lcd(char *data, uint8_t size, uint8_t x, uint8_t y)
 {
     char frame[24];
-    char lcd_data[20] = "0000                ";
+    char lcd_data[21] = "0000                ";
 
     lcd_data[0] = (x / 10) + 0x30;
     lcd_data[1] = (x % 10) + 0x30;
@@ -145,7 +145,7 @@ void app_clear_lcd(void)
 {
     char frame[24];
 
-    create_frame(frame, "", CLEAR_LCD_BYTE, 0);
+    create_frame(frame, (char *)"", CLEAR_LCD_BYTE, 0);
 
     comWrite(appData.PortIndex, frame, 24);
 }
