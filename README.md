@@ -35,7 +35,7 @@ STX  | FUNC | Bytes não utilizados no envio (devem ser enviados mesmo assim)    
 0x01 | 0x01 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
 #### Resposta:
-STX  | FUNC | OUTPUTS (1 - 4)           | INPUTS (1 - 4)            | PWMC PWMD PWMU | Bytes não utilizados                         | CKS  | ETX
+STX  | FUNC | OUT (1 - 4)               | IN (1 - 4)                | PWMC PWMD PWMU | Bytes não utilizados                         | CKS  | ETX
 ---- | ---- | --------------------------| ------------------------- | -------------- | -------------------------------------------- | ---- | ----
 0x01 | 0x01 | 0x31 | 0x30 | 0x31 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 0x30 0x30 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
@@ -44,8 +44,8 @@ Indicador | Descrição
 --------- | ---------
 STX | Byte <0x01> de Inicio de Frame
 FUNC | Função
-OUTPUTS (1 - 4) | Valor das saidas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
-INPUTS (1 - 4) | Valor das entradas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
+OUT (1 - 4) | Valor das saidas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
+IN (1 - 4) | Valor das entradas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
 PWMC | Centena do PWM
 PWMD | Dezena do PWM
 PWMU | Unidade do PWM
@@ -114,7 +114,7 @@ ETX | Byte <0x03> de Fim de Frame
 ### Escrever PWM
 #### Envio:
 STX  | FUNC | PWMC PWMD PWMU | Bytes não utilizados no envio (devem ser enviados mesmo assim)                       | CKS  | ETX
----- | ---- | ----------------------------------------------------------------------------------------------------- | ---- | ----
+---- | ---- | -------------- | ------------------------------------------------------------------------------------ | ---- | ----
 0x01 | 0x05 | 0x30 0x38 0x35 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
 #### Resposta:
