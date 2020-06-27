@@ -36,10 +36,12 @@ void app_set_on_new_data(OnNewData nd);
 uint8_t app_connect(uint8_t port);
 uint8_t app_get_ports(char ports[][5]);
 void app_disconnect(void);
+
 void app_toggle_output(uint8_t output);
 void app_auto_read_io(uint8_t enable);
 void app_write_lcd(char *data, uint8_t line);
 void app_clear_lcd(void);
+void app_set_pwm(uint8_t value);
 
 #define START_BYTE          0x02
 #define END_BYTE            0x03

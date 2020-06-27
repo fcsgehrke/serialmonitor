@@ -38,8 +38,11 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "Serial Monitor v0.1"
 FONT 8, "Ms Shell Dlg"
 {
+    CONTROL         "", IDD_PWM_SLIDER, TRACKBAR_CLASS, WS_TABSTOP | WS_DISABLED | TBS_BOTH | TBS_NOTICKS, 13, 252, 77, 20, WS_EX_LEFT
+    CTEXT           "Valor atual: 0", IDD_PWM_VALUE, 13, 275, 77, 9, SS_CENTER, WS_EX_LEFT
+    CTEXT           "PWM", 0, 13, 243, 77, 9, SS_CENTER, WS_EX_LEFT
     EDITTEXT        IDD_LOG, 113, 29, 395, 250, WS_VSCROLL | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_READONLY, WS_EX_LEFT
-    LTEXT           "Monitor de Portas Seriais com Comandos Predefinidos", 0, 7, 7, 170, 9, SS_LEFT, WS_EX_LEFT
+    LTEXT           "Controle de dispositivo serial", 0, 7, 6, 90, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "Entradas:", 0, 335, 7, 31, 9, SS_LEFT, WS_EX_LEFT
     LTEXT           "Saidas:", 0, 433, 7, 24, 9, SS_LEFT, WS_EX_LEFT
     GROUPBOX        "Comandos", 0, 5, 19, 95, 280, 0, WS_EX_LEFT

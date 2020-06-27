@@ -39,6 +39,8 @@ void loadControls(HWND hwndDlg)
    hLog = GetDlgItem (hwndDlg, IDD_LOG);
    hCombo = GetDlgItem(hwndDlg, IDD_PORT_COMBO);
    hBtnConnect = GetDlgItem(hwndDlg, IDD_CONNECT_BTN);
+
+   SendDlgItemMessage(hwndDlg, IDD_PWM_SLIDER, TBM_SETRANGE, (WPARAM)1, MAKELONG(0, 100));
 }
 
 void setOutputData(HWND hwndDlg, uint8_t output, uint8_t value)
@@ -243,6 +245,8 @@ void changeUiState(HWND hwndDlg, uint8_t enabled)
     EnableWindow(GetDlgItem(hwndDlg, IDD_OUTPUT_4_BTN), enabled);
     EnableWindow(GetDlgItem(hwndDlg, IDD_READ_IO_BTN), enabled);
     EnableWindow(GetDlgItem(hwndDlg, IDD_WRITE_LCD_BTN), enabled);
+    EnableWindow(GetDlgItem(hwndDlg, IDD_PWM_SLIDER), enabled);
+
     EnableWindow(GetDlgItem(hwndDlg, IDD_PORT_COMBO), !enabled);
 }
 
@@ -255,6 +259,15 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_NEW_DATA:
             updateUi(hwndDlg);
         return TRUE;
+
+        case WM_HSCROLL:
+            if (LOWORD(wParam) == TB_THUMBTRACK)
+            {
+                int dwPos = SendDlgItemMessage(hwndDlg, IDD_PWM_SLIDER, TBM_GETPOS, 0, 0);
+                printf("Position: %d\n", dwPos);
+
+            }
+            break;
 
         case WM_INITDIALOG:
         {
@@ -380,6 +393,10 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 {
                     int ret = DialogBox(hInst, MAKEINTRESOURCE(DLG_LCD), hwndDlg, (DLGPROC)DlgMain);
                 }
+                break;
+
+            case IDD_PWM_SLIDER:
+                printf("pwm...\n");
                 break;
             }
         }

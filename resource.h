@@ -28,7 +28,9 @@
 #define IDD_RX_LED                              40018
 #define IDD_PORT_COMBO                          40019
 #define IDD_CONNECT_BTN                         40020
+#define IDD_PWM_SLIDER                          40021
 #define IDD_LOG_CLEAR_BTN                       40022
+#define IDD_PWM_VALUE                           40023
 #define IDD_LCD_SEND_BTN                        40100
 #define IDD_LCD_DATA                            40101
 #define IDD_LCD_CANCEL_BTN                      40102

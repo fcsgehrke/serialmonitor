@@ -96,6 +96,11 @@ void app_clear_lcd(void)
 
 }
 
+void app_set_pwm(uint8_t value)
+{
+
+}
+
 DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
 {
     int rx_count = 0;
