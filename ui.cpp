@@ -25,7 +25,7 @@ char buf_conv[4096];
 uint8_t auto_io = 0;
 
 // LCD Dialog
-char lcd_text[16];
+char lcd_text[17];
 uint8_t lcd_col, lcd_row;
 
 void loadIcons(HWND hwndDlg)
@@ -272,7 +272,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     uint8_t pwm = 0, sz;
     uint8_t outputs_aux[4];
-    char aux[2];
+    char aux[4];
 
     if (hMainDlg == 0 || hwndDlg == hMainDlg)
     {
@@ -472,12 +472,10 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                         break;
 
                     case IDD_LCD_SEND_BTN:
-                        sz = GetDlgItemText(hwndDlg, IDD_LCD_DATA, lcd_text, 16);
-                        GetDlgItemText(hwndDlg, IDD_LCD_ROW, aux, 2);
+                        sz = GetDlgItemText(hwndDlg, IDD_LCD_DATA, lcd_text, 17);
+                        GetDlgItemText(hwndDlg, IDD_LCD_ROW, aux, 4);
                         lcd_row = atoi(aux);
-                        if (lcd_row > 1)
-                            lcd_row = 1;
-                        GetDlgItemText(hwndDlg, IDD_LCD_COL, aux, 2);
+                        GetDlgItemText(hwndDlg, IDD_LCD_COL, aux, 4);
                         lcd_col = atoi(aux);
                         app_write_lcd(lcd_text, sz, lcd_col, lcd_row);
                         EndDialog(hwndDlg, 0);

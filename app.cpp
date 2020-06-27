@@ -135,10 +135,19 @@ void app_write_lcd(char *data, uint8_t size, uint8_t x, uint8_t y)
     char frame[24];
     char lcd_data[21] = "0000                ";
 
+    if (x > 15)
+        x = 15;
+
+    if (y > 1)
+        y = 1;
+
+    if (size > 16)
+        size = 16;
+
     lcd_data[0] = (x / 10) + 0x30;
     lcd_data[1] = (x % 10) + 0x30;
     lcd_data[2] = 0x30;
-    lcd_data[3] = (y / 10) + 0x30;
+    lcd_data[3] = y + 0x30;
     strncpy(&lcd_data[4], data, size);
     create_frame(frame, lcd_data, WRITE_LCD_BYTE, 20);
 
