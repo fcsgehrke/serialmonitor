@@ -49,15 +49,19 @@ void setOutputData(HWND hwndDlg, uint8_t output, uint8_t value)
     {
     case 0:
         SendDlgItemMessage(hwndDlg, IDD_OUTPUT_1_LED, STM_SETIMAGE, IMAGE_ICON, value == 1 ? (LPARAM)hIconOn : (LPARAM)hIconOff);
+        SetDlgItemText(hwndDlg, IDD_OUTPUT_1_BTN, value == 1 ? "Desliga Saida 1" : "Liga Saida 1");
         break;
     case 1:
         SendDlgItemMessage(hwndDlg, IDD_OUTPUT_2_LED, STM_SETIMAGE, IMAGE_ICON, value == 1 ? (LPARAM)hIconOn : (LPARAM)hIconOff);
+        SetDlgItemText(hwndDlg, IDD_OUTPUT_2_BTN, value == 1 ? "Desliga Saida 2" : "Liga Saida 2");
         break;
     case 2:
         SendDlgItemMessage(hwndDlg, IDD_OUTPUT_3_LED, STM_SETIMAGE, IMAGE_ICON, value == 1 ? (LPARAM)hIconOn : (LPARAM)hIconOff);
+        SetDlgItemText(hwndDlg, IDD_OUTPUT_3_BTN, value == 1 ? "Desliga Saida 3" : "Liga Saida 3");
         break;
     case 3:
         SendDlgItemMessage(hwndDlg, IDD_OUTPUT_4_LED, STM_SETIMAGE, IMAGE_ICON, value == 1 ? (LPARAM)hIconOn : (LPARAM)hIconOff);
+        SetDlgItemText(hwndDlg, IDD_OUTPUT_4_BTN, value == 1 ? "Desliga Saida 4" : "Liga Saida 4");
         break;
     }
 }
@@ -252,6 +256,9 @@ void changeUiState(HWND hwndDlg, uint8_t enabled)
 
 BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    uint8_t pwm = 0;
+    uint8_t outputs_aux[4];
+
     if (hMainDlg == 0 || hwndDlg == hMainDlg)
     {
         switch(uMsg)
@@ -263,9 +270,9 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_HSCROLL:
             if (LOWORD(wParam) == TB_THUMBTRACK)
             {
-                int dwPos = SendDlgItemMessage(hwndDlg, IDD_PWM_SLIDER, TBM_GETPOS, 0, 0);
-                printf("Position: %d\n", dwPos);
-
+                pwm = SendDlgItemMessage(hwndDlg, IDD_PWM_SLIDER, TBM_GETPOS, 0, 0);
+                if (pwm % 5 == 0)
+                    app_set_pwm(pwm);
             }
             break;
 
@@ -315,27 +322,27 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             switch(LOWORD(wParam))
             {
             case IDD_OUTPUT_1_BTN:
-                LOG("Clicked !");
-                setOutputData(hwndDlg, 0, 1);
-                addComboData("COM1");
-                blinkRx(hwndDlg);
+                memcpy(outputs_aux, appData.Outputs, 4);
+                outputs_aux[0] = !outputs_aux[0];
+                app_write_outputs(outputs_aux);
                 break;
 
             case IDD_OUTPUT_2_BTN:
-                LOG_RX("Clicked !");
-                setOutputData(hwndDlg, 1, 1);
-                 addComboData("COM2");
-                 blinkTx(hwndDlg);
+                memcpy(outputs_aux, appData.Outputs, 4);
+                outputs_aux[1] = !outputs_aux[1];
+                app_write_outputs(outputs_aux);
                 break;
 
             case IDD_OUTPUT_3_BTN:
-                LOG_TX("Clicked !");
-                setOutputData(hwndDlg, 2, 1);
-                clearComboData();
+                memcpy(outputs_aux, appData.Outputs, 4);
+                outputs_aux[2] = !outputs_aux[2];
+                app_write_outputs(outputs_aux);
                 break;
 
             case IDD_OUTPUT_4_BTN:
-                setOutputData(hwndDlg, 3, 1);
+                memcpy(outputs_aux, appData.Outputs, 4);
+                outputs_aux[3] = !outputs_aux[3];
+                app_write_outputs(outputs_aux);
                 break;
 
             case IDD_LOG_CLEAR_BTN:
@@ -391,12 +398,8 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             case IDD_WRITE_LCD_BTN:
                 if (HIWORD(wParam) == BN_CLICKED)
                 {
-                    int ret = DialogBox(hInst, MAKEINTRESOURCE(DLG_LCD), hwndDlg, (DLGPROC)DlgMain);
+                    DialogBox(hInst, MAKEINTRESOURCE(DLG_LCD), hwndDlg, (DLGPROC)DlgMain);
                 }
-                break;
-
-            case IDD_PWM_SLIDER:
-                printf("pwm...\n");
                 break;
             }
         }

@@ -7,7 +7,9 @@
 #define IDI_IO_OFF                              107
 #define IDI_IO_ON                               109
 #define DLG_LCD                                 112
+#define IDD_LCD_COL                             40000
 #define IDD_OUTPUT_1_BTN                        40000
+#define IDD_LCD_ROW                             40001
 #define IDD_OUTPUT_2_BTN                        40001
 #define IDD_OUTPUT_3_BTN                        40002
 #define IDD_OUTPUT_4_BTN                        40003

@@ -2,15 +2,15 @@
 1593033859 source:c:\users\felipe\projects\serialmonitor\main.cpp
 	"ui.h"
 
-1593238969 c:\users\felipe\projects\serialmonitor\resource.h
+1593242602 c:\users\felipe\projects\serialmonitor\resource.h
 
-1593238969 source:c:\users\felipe\projects\serialmonitor\resource.rc
+1593242602 source:c:\users\felipe\projects\serialmonitor\resource.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>
 	"resource.h"
 
-1593105137 c:\users\felipe\projects\serialmonitor\ui.h
+1593242008 c:\users\felipe\projects\serialmonitor\ui.h
 	<windows.h>
 	<commctrl.h>
 	<stdio.h>
@@ -46,7 +46,7 @@
 	<stdio.h>
 	<string.h>
 
-1593232767 source:c:\users\felipe\projects\serialmonitor\app.cpp
+1593241404 source:c:\users\felipe\projects\serialmonitor\app.cpp
 	"app.h"
 
 1593058766 c:\users\felipe\projects\serialmonitor\lib\ringbuffer.h
