@@ -172,6 +172,7 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
     int rx_count = 0;
     char frame_buf[24];
     int16_t start_pos, end_pos;
+    uint8_t pwm = 0;
 
     while (appData.Connected)
     {
@@ -205,6 +206,11 @@ DWORD WINAPI ReadThreadFunc(LPVOID lpParam)
                             appData.Inputs[1] = frame_buf[8] - 0x30;
                             appData.Inputs[2] = frame_buf[9] - 0x30;
                             appData.Inputs[3] = frame_buf[10] - 0x30;
+                            pwm = 0;
+                            pwm += (frame_buf[11] - 0x30) * 100;
+                            pwm += (frame_buf[12] - 0x30) * 10;
+                            pwm += (frame_buf[13] - 0x30) * 1;
+                            appData.Pwm = pwm;
                         }
 
                         if (appData.NewDataEvent)
