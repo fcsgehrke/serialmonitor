@@ -34,21 +34,23 @@ Escrever PWM | <0x05>
 -STX-FUNC---------------------------------------------- DADOS -------------------------------------------------CKS-ETX-
 
 #### Resposta:
-0x01 0x01 0x31 0x30 0x31 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0xC0 0x03
--STX-FUNC--O1---O2---O3---O4---I1---I2---I3---I4--PWMC-PWMD-PWMU-----------------------------------------------CKS-ETX-
+STX | FUNC | O1 | O2 | O3 | O4 | I1 | I2 | I3 | I4 | PWMC | PWMD | PWMU | SOBRA | CKS | ETX
+--- | ---- | -- | -- | -- | -- | -- | -- | -- | -- | ---- | ---- | ---- | ----- | --- | ---
+0x01 | 0x01 | 0x31 | 0x30 | 0x31 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+
 
 Indicador | Descrição
 --------- | ---------
 STX | Byte <0x01> de Inicio de Frame
 FUNC | Função
-O1 | Valor da saida 1
-O2 | Valor da saida 2
-O3 | Valor da saida 3
-O4 | Valor da saida 4
-I1 | Valor da entrada 1
-I2 | Valor da entrada 2
-I3 | Valor da entrada 3
-I4 | Valor da entrada 4
+O1 | Valor da saida 1 ('0', '1')
+O2 | Valor da saida 2 ('0', '1')
+O3 | Valor da saida 3 ('0', '1')
+O4 | Valor da saida 4 ('0', '1')
+I1 | Valor da entrada 1 ('0', '1')
+I2 | Valor da entrada 2 ('0', '1')
+I3 | Valor da entrada 3 ('0', '1')
+I4 | Valor da entrada 4 ('0', '1')
 PWMC | Centena do PWM
 PWMD | Dezena do PWM
 PWMU | Unidade do PWM
