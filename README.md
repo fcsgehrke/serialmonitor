@@ -30,28 +30,22 @@ Escrever PWM | <0x05>
 
 ### Ler I/O
 #### Envio:
-STX | FUNC | Bytes não utilizados no envio (devem ser enviados mesmo assim) | CKS | ETX
---- | ---- |--------------------- | --- | ---
+STX  | FUNC | Bytes não utilizados no envio (devem ser enviados mesmo assim)                                      | CKS  | ETX
+---- | ---- | --------------------------------------------------------------------------------------------------- | ---- | ----
 0x01 | 0x01 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
 #### Resposta:
-STX | FUNC | O1 | O2 | O3 | O4 | I1 | I2 | I3 | I4 | PWMC | PWMD | PWMU | Bytes não utilizados | CKS | ETX
---- | ---- | -- | -- | -- | -- | -- | -- | -- | -- | ---- | ---- | ---- | ----- | --- | ---
-0x01 | 0x01 | 0x31 | 0x30 | 0x31 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+STX  | FUNC | OUTPUTS (1 - 4)           | INPUTS (1 - 4)            | PWMC PWMD PWMU | Bytes não utilizados                         | CKS  | ETX
+---- | ---- | --------------------------| ------------------------- | -------------- | -------------------------------------------- | ---- | ----
+0x01 | 0x01 | 0x31 | 0x30 | 0x31 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 | 0x30 0x30 0x30 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
 
 
 Indicador | Descrição
 --------- | ---------
 STX | Byte <0x01> de Inicio de Frame
 FUNC | Função
-O1 | Valor da saida 1 ('0', '1')
-O2 | Valor da saida 2 ('0', '1')
-O3 | Valor da saida 3 ('0', '1')
-O4 | Valor da saida 4 ('0', '1')
-I1 | Valor da entrada 1 ('0', '1')
-I2 | Valor da entrada 2 ('0', '1')
-I3 | Valor da entrada 3 ('0', '1')
-I4 | Valor da entrada 4 ('0', '1')
+OUTPUTS (1 - 4) | Valor das saidas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
+INPUTS (1 - 4) | Valor das entradas de 1 a 4 (4 bytes ASCII) -> ('0', '1')
 PWMC | Centena do PWM
 PWMD | Dezena do PWM
 PWMU | Unidade do PWM
@@ -84,7 +78,7 @@ ETX | Byte <0x03> de Fim de Frame
 #### Envio:
 STX  | FUNC |     X     | Y         | TEXTO                                                                           | CKS  | ETX
 ---- | ---- | --------- | --------- | ------------------------------------------------------------------------------- | ---- | ----
-0x01 | 0x01 | 0x31 0x30 | 0x31 0x30 | 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 | 0xC0 | 0x03
+0x01 | 0x03 | 0x31 0x30 | 0x31 0x30 | 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 | 0xC0 | 0x03
 
 #### Resposta:
 Não há.
@@ -96,5 +90,42 @@ FUNC | Função
 X | Posição X do LCD (0 - 15)
 Y | Posição Y do LCD (0 - 1)
 TEXTO | 16 Caractéres Alfanuméricos (ASCII)
+CKS | Checksum
+ETX | Byte <0x03> de Fim de Frame
+
+
+### Limpar LCD
+#### Envio:
+STX  | FUNC | Bytes não utilizados no envio (devem ser enviados mesmo assim)                                      | CKS  | ETX
+---- | ---- | --------------------------------------------------------------------------------------------------- | ---- | ----
+0x01 | 0x04 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+
+#### Resposta:
+Não há.
+
+Indicador | Descrição
+--------- | ---------
+STX | Byte <0x01> de Inicio de Frame
+FUNC | Função
+CKS | Checksum
+ETX | Byte <0x03> de Fim de Frame
+
+
+### Escrever PWM
+#### Envio:
+STX  | FUNC | PWMC PWMD PWMU | Bytes não utilizados no envio (devem ser enviados mesmo assim)                       | CKS  | ETX
+---- | ---- | ----------------------------------------------------------------------------------------------------- | ---- | ----
+0x01 | 0x05 | 0x30 0x38 0x35 | 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 0x30 | 0xC0 | 0x03
+
+#### Resposta:
+Não há.
+
+Indicador | Descrição
+--------- | ---------
+STX | Byte <0x01> de Inicio de Frame
+FUNC | Função
+PWMC | Centena do PWM
+PWMD | Dezena do PWM
+PWMU | Unidade do PWM
 CKS | Checksum
 ETX | Byte <0x03> de Fim de Frame
