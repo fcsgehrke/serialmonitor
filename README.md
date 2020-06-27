@@ -82,7 +82,7 @@ ETX | Byte <0x03> de Fim de Frame
 
 ### Escrever LCD
 #### Envio:
- STX | FUNC |     X     | Y         | TEXTO                                                                           | CKS  | ETX
+STX  | FUNC |     X     | Y         | TEXTO                                                                           | CKS  | ETX
 ---- | ---- | --------- | --------- | ------------------------------------------------------------------------------- | ---- | ----
 0x01 | 0x01 | 0x31 0x30 | 0x31 0x30 | 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 | 0xC0 | 0x03
 
